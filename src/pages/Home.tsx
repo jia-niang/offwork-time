@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import Helmet from 'react-helmet'
 import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
@@ -7,6 +7,7 @@ import useWorkhours from '@hooks/useWorkhours'
 import DayWorkhoursLeft from '@components/DayWorkhoursLeft'
 import EditButton from '@components/EditButton'
 import InfoText from '@components/InfoText'
+import useConfig from '@/hooks/useConfig'
 
 const Page = styled.div`
   padding: 15px;
@@ -20,6 +21,12 @@ const Background = styled.div`
 
 const Home: React.FC = () => {
   const history = useHistory()
+  const [config] = useConfig()
+
+  useLayoutEffect(() => {
+    document.body.style.backgroundImage =
+      `url('` + require(`../assets/img/repeat${config.backgroundIndex}.jpg`).default + `')`
+  }, [config])
 
   const toSettingPage = () => {
     history.push('/setting')

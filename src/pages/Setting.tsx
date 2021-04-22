@@ -1,19 +1,17 @@
 import React, { useState, useLayoutEffect } from 'react'
 import Helmet from 'react-helmet'
 import styled from '@emotion/styled'
-import { Switch, InputNumber, Button } from 'antd'
+import { Switch, InputNumber, Button, Radio } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 
 import { TimePicker } from '@components/DateTimePicker'
-import {
-  DayWorkHour,
-  timeToNative,
-  nativeToTime,
-  Time,
-  Duration,
-} from '@/def/DayWorkDef'
 import useWorkhours from '@hooks/useWorkhours'
+import useConfig from '@/hooks/useConfig'
+import { DayWorkHour, timeToNative, nativeToTime, Time, Duration } from '@/def/DayWorkDef'
+import { Config } from '@/def/ConfigDef'
+
+const backgroundImageCount: number = Number(process.env.REACT_APP_BACKGROUND_IMAGE_COUNT) || 1
 
 const Page = styled.div`
   margin: 15px;
@@ -26,14 +24,31 @@ const Row = styled.div`
   padding: 7.5px 10px;
 `
 
+const BGImgPicker = styled('div')<{ bgIndex: number }>`
+  width: 70px;
+  height: 70px;
+  background-image: ${prop =>
+    `url('` + require(`../assets/img/repeat${prop.bgIndex}.jpg`).default + `')`};
+  border-radius: 3px;
+  border: 1.5px solid #3d3d3d;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: 80%;
+  margin-top: 5px;
+`
+
 const Setting: React.FC = () => {
   const history = useHistory()
   const [workhour, setWorkhour] = useWorkhours()
+  const [config, setConfig] = useConfig()
+
   const [currentWorkhour, setCurrentWorkhour] = useState<DayWorkHour>(workhour)
+  const [currentConfig, setCurrentConfig] = useState<Config>(config)
 
   useLayoutEffect(() => {
     setCurrentWorkhour(workhour)
-  }, [workhour])
+    setCurrentConfig(config)
+  }, [workhour, config])
 
   const cancelClick = () => {
     history.push('/')
@@ -41,8 +56,12 @@ const Setting: React.FC = () => {
 
   const saveClick = () => {
     setWorkhour(currentWorkhour)
+    setConfig(currentConfig)
     history.push('/')
   }
+
+  const range: (count: number) => number[] = count =>
+    Array.from(new Array(count), (_, index) => index + 1)
 
   return (
     <Page>
@@ -169,6 +188,28 @@ const Setting: React.FC = () => {
         </>
       ) : null}
 
+      <Row>
+        <span>背景图案：</span>
+        <div style={{ display: 'inline-block' }}>
+          <Radio.Group
+            onChange={e => {
+              setCurrentConfig({
+                ...currentConfig,
+                backgroundIndex: e.target.value || 1,
+              })
+            }}
+            defaultValue={currentConfig.backgroundIndex}
+          >
+            {range(backgroundImageCount).map(index => (
+              <div key={index} style={{ display: 'inline-block', marginRight: '15px' }}>
+                <Radio value={index}>背景{index}</Radio>
+                <BGImgPicker bgIndex={index} />
+              </div>
+            ))}
+          </Radio.Group>
+        </div>
+      </Row>
+
       <Row style={{ marginTop: 30, textAlign: 'right' }}>
         <Button
           onClick={cancelClick}
@@ -180,13 +221,7 @@ const Setting: React.FC = () => {
         >
           取消
         </Button>
-        <Button
-          onClick={saveClick}
-          icon={<CheckOutlined />}
-          type="primary"
-          size="small"
-          ghost
-        >
+        <Button onClick={saveClick} icon={<CheckOutlined />} type="primary" size="small" ghost>
           保存设置
         </Button>
       </Row>

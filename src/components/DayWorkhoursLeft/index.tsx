@@ -4,6 +4,7 @@ import { useInterval } from 'ahooks'
 
 import { DayWorkHour } from '@/def/DayWorkDef'
 import { calcLeftWorkhours } from './timeCalc'
+import useConfig from '@/hooks/useConfig'
 
 const Wrap = styled.div`
   cursor: pointer;
@@ -50,6 +51,7 @@ const DayWorkhoursLeft: React.FC<DayWorkHour> = props => {
   const [minute, setMinute] = useState<number>(0)
 
   const numPaddingTwo = (num: number): string => String(num).padStart(2, '0')
+  const [{ timer }] = useConfig()
 
   useInterval(
     () => {
@@ -57,7 +59,7 @@ const DayWorkhoursLeft: React.FC<DayWorkHour> = props => {
       setHour(hour)
       setMinute(minute)
     },
-    10 * 1000,
+    timer,
     { immediate: true }
   )
 
