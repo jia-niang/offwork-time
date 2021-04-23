@@ -1,22 +1,26 @@
-export interface Time {
+import { set, differenceInMinutes } from 'date-fns'
+
+import { durationToMinutes, minutesToDuration } from '@utils/Duration'
+
+export interface ITime {
   hour: number
   minute: number
 }
 
-export interface Duration {
+export interface IDuration {
   hour: number
   minute: number
 }
 
-export interface DayWorkHour {
-  begin: Time
-  end: Time
+export interface IDayWorkhour {
+  begin: ITime
+  end: ITime
   hasRest: boolean
-  restBegin?: Time
-  restDuration?: Duration
+  restBegin?: ITime
+  restDuration?: IDuration
 }
 
-export const defaultWorkhour: DayWorkHour = {
+export const defaultWorkhour: IDayWorkhour = {
   begin: { hour: 9, minute: 0 },
   end: { hour: 18, minute: 0 },
   hasRest: true,
@@ -24,10 +28,34 @@ export const defaultWorkhour: DayWorkHour = {
   restDuration: { hour: 1, minute: 0 },
 }
 
-export const timeToNative = (time: Time) =>
-  new Date(0, 0, 0, time.hour, time.minute, 0, 0)
+export const timeToNative = (time: ITime) => new Date(0, 0, 0, time.hour, time.minute, 0, 0)
 
-export const nativeToTime: (p?: Date) => Time = nativeTime => ({
+export const nativeToTime: (p?: Date) => ITime = nativeTime => ({
   hour: nativeTime?.getHours() ?? 0,
   minute: nativeTime?.getMinutes() ?? 0,
 })
+
+export function getDayWorkhours(workHour: IDayWorkhour, useMoonRest: boolean = true): IDuration {
+  const { begin, end } = workHour
+  const diffMins = differenceInMinutes(timeToNative(end), timeToNative(begin))
+
+  const moonRestMins =
+    useMoonRest && workHour.hasRest ? durationToMinutes(workHour.restDuration!) : 0
+
+  return minutesToDuration(diffMins - moonRestMins)
+}
+
+export function calcLeftWorkhours(workHour: IDayWorkhour, current: Date = new Date()): IDuration {
+  const { begin, end } = workHour
+
+  const beginTime = set(current, { hours: begin.hour, minutes: begin.minute })
+  const endTime = set(current, { hours: end.hour, minutes: end.minute })
+
+  if (current < beginTime) {
+    return { hour: NaN, minute: NaN }
+  }
+
+  const diffMins = differenceInMinutes(endTime, current)
+
+  return minutesToDuration(diffMins)
+}

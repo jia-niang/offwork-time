@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useInterval } from 'ahooks'
 
-import { IDayWorkhour, calcLeftWorkhours } from '@def/DayWorkDef'
 import useConfig from '@hooks/useConfig'
+import { IWeekendRest } from '@def/WeekendDef'
+import { IDayWorkhour } from '@def/DayWorkDef'
+import { calcLeftSalaryDay, ISalaryDay } from '@def/SalaryDayDef'
 
 const Wrap = styled.div`
   padding: 15px;
@@ -46,11 +48,13 @@ const Colon = styled.div`
   }
 `
 
-export interface IDayWorkhoursLeftProps {
+export interface ISalaryLeftPageProps {
   workHours: IDayWorkhour
+  weekendRest: IWeekendRest
+  salaryDay: ISalaryDay
 }
 
-const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
+const SalaryDayLeft: React.FC<ISalaryLeftPageProps> = props => {
   const [hour, setHour] = useState<number>(0)
   const [minute, setMinute] = useState<number>(0)
 
@@ -59,7 +63,11 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
 
   useInterval(
     () => {
-      const { hour, minute } = calcLeftWorkhours(props.workHours)
+      const { hour, minute } = calcLeftSalaryDay(
+        props.salaryDay,
+        props.workHours,
+        props.weekendRest
+      )
       setHour(hour)
       setMinute(minute)
     },
@@ -67,17 +75,9 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
     { immediate: true }
   )
 
-  if (isNaN(hour) || isNaN(minute)) {
-    return <div style={{ fontSize: 20 }}>别急！ 还没到上班时间呢 ~</div>
-  }
-
-  if (hour <= 0 && minute <= 0) {
-    return <div style={{ fontSize: 20 }}>下班啦！ 尽情享受生活吧 ~</div>
-  }
-
   return (
     <Wrap>
-      <Tips>距离下班剩余工时还有：</Tips>
+      <Tips>距离发薪日剩余工时还有：</Tips>
       <Time>
         <Num hints={'小时'}>{numPaddingTwo(hour)}</Num>
         <Colon />
@@ -87,4 +87,4 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
   )
 }
 
-export default DayWorkhoursLeft
+export default SalaryDayLeft

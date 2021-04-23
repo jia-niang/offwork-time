@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useInterval } from 'ahooks'
 
-import { IDayWorkhour, calcLeftWorkhours } from '@def/DayWorkDef'
+import { calcLeftWeekend, IWeekendRest } from '@def/WeekendDef'
 import useConfig from '@hooks/useConfig'
+import { IDayWorkhour } from '@def/DayWorkDef'
 
 const Wrap = styled.div`
   padding: 15px;
@@ -46,11 +47,12 @@ const Colon = styled.div`
   }
 `
 
-export interface IDayWorkhoursLeftProps {
+export interface IWeekendLeftPageProps {
   workHours: IDayWorkhour
+  weekendRest: IWeekendRest
 }
 
-const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
+const WeekendLeft: React.FC<IWeekendLeftPageProps> = props => {
   const [hour, setHour] = useState<number>(0)
   const [minute, setMinute] = useState<number>(0)
 
@@ -59,7 +61,7 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
 
   useInterval(
     () => {
-      const { hour, minute } = calcLeftWorkhours(props.workHours)
+      const { hour, minute } = calcLeftWeekend(props.weekendRest.type, props.workHours)
       setHour(hour)
       setMinute(minute)
     },
@@ -71,13 +73,9 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
     return <div style={{ fontSize: 20 }}>别急！ 还没到上班时间呢 ~</div>
   }
 
-  if (hour <= 0 && minute <= 0) {
-    return <div style={{ fontSize: 20 }}>下班啦！ 尽情享受生活吧 ~</div>
-  }
-
   return (
     <Wrap>
-      <Tips>距离下班剩余工时还有：</Tips>
+      <Tips>距离周末休息剩余工时还有：</Tips>
       <Time>
         <Num hints={'小时'}>{numPaddingTwo(hour)}</Num>
         <Colon />
@@ -87,4 +85,4 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
   )
 }
 
-export default DayWorkhoursLeft
+export default WeekendLeft
