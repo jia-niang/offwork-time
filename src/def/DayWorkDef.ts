@@ -1,4 +1,4 @@
-import { set, differenceInMinutes } from 'date-fns'
+import { set, add, differenceInMinutes } from 'date-fns'
 
 import { durationToMinutes, minutesToDuration } from '@utils/Duration'
 
@@ -35,7 +35,7 @@ export const nativeToTime: (p?: Date) => ITime = nativeTime => ({
   minute: nativeTime?.getMinutes() ?? 0,
 })
 
-export function getDayWorkhours(workHour: IDayWorkhour, useMoonRest: boolean = true): IDuration {
+export function getDailyWorkhours(workHour: IDayWorkhour, useMoonRest: boolean = true): IDuration {
   const { begin, end } = workHour
   const diffMins = differenceInMinutes(timeToNative(end), timeToNative(begin))
 
@@ -45,8 +45,12 @@ export function getDayWorkhours(workHour: IDayWorkhour, useMoonRest: boolean = t
   return minutesToDuration(diffMins - moonRestMins)
 }
 
-export function calcLeftWorkhours(workHour: IDayWorkhour, current: Date = new Date()): IDuration {
-  const { begin, end } = workHour
+export function calcTodayLeftWorkhours(
+  workHour: IDayWorkhour,
+  current: Date = new Date(),
+  useMoonRest: boolean = true
+): IDuration {
+  const { begin, end, hasRest, restBegin, restDuration } = workHour
 
   const beginTime = set(current, { hours: begin.hour, minutes: begin.minute })
   const endTime = set(current, { hours: end.hour, minutes: end.minute })
@@ -56,6 +60,20 @@ export function calcLeftWorkhours(workHour: IDayWorkhour, current: Date = new Da
   }
 
   const diffMins = differenceInMinutes(endTime, current)
+
+  if (useMoonRest && hasRest && restBegin && restDuration) {
+    const restEnd = add(set(current, { hours: restBegin.hour, minutes: restBegin.minute }), {
+      hours: restDuration.hour,
+      minutes: restDuration.minute,
+    })
+
+    const minsToRestEnd = Math.min(
+      Math.max(differenceInMinutes(restEnd, current), 0),
+      durationToMinutes(restDuration)
+    )
+
+    return minutesToDuration(diffMins - minsToRestEnd)
+  }
 
   return minutesToDuration(diffMins)
 }

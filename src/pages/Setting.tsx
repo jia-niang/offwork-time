@@ -262,7 +262,9 @@ const Setting: React.FC = () => {
               precision={0}
             />
           </Row>
-          <Row>注：例如每月最后一天发薪，则选择 “倒数第 n 日”，数值填 “1”</Row>
+          <Row>例如每月最后一天发薪，则选择 “倒数第 n 日”，n 填 “1”</Row>
+          <Row>例如每月15号发薪，则选择 “第 n 日”，n 填 “15”</Row>
+          <Row>注：固定日发薪按照上班时间计算倒计时，倒数日发薪按照下班时间计算倒计时</Row>
         </Tabs.TabPane>
 
         <Tabs.TabPane tab="偏好设置" key="other">

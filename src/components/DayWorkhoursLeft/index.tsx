@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useInterval } from 'ahooks'
 
-import { IDayWorkhour, calcLeftWorkhours } from '@def/DayWorkDef'
+import { IDayWorkhour, calcTodayLeftWorkhours } from '@def/DayWorkDef'
 import useConfig from '@hooks/useConfig'
 
 const Wrap = styled.div`
@@ -59,7 +59,7 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
 
   useInterval(
     () => {
-      const { hour, minute } = calcLeftWorkhours(props.workHours)
+      const { hour, minute } = calcTodayLeftWorkhours(props.workHours)
       setHour(hour)
       setMinute(minute)
     },

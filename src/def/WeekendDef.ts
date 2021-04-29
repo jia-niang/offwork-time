@@ -1,6 +1,6 @@
 import { set, differenceInDays, nextSaturday, nextSunday, startOfDay } from 'date-fns'
 
-import { calcLeftWorkhours, IDayWorkhour, getDayWorkhours, IDuration } from '@def/DayWorkDef'
+import { calcTodayLeftWorkhours, IDayWorkhour, getDailyWorkhours, IDuration } from '@def/DayWorkDef'
 import { durationToMinutes, minutesToDuration } from '@utils/Duration'
 
 export enum WeekRestType {
@@ -35,8 +35,8 @@ export function calcLeftWeekend(
     minutes: workHour.begin.minute,
   })
 
-  const todayMinsLeft = Math.max(0, durationToMinutes(calcLeftWorkhours(workHour)))
-  const dayWorkMins = durationToMinutes(getDayWorkhours(workHour))
+  const todayMinsLeft = Math.max(0, durationToMinutes(calcTodayLeftWorkhours(workHour)))
+  const dayWorkMins = durationToMinutes(getDailyWorkhours(workHour))
 
   const diffMins = differenceInDays(nextWeekendBegin, startOfNextDay) * dayWorkMins + todayMinsLeft
 

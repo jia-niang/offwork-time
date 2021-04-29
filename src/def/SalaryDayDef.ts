@@ -1,6 +1,6 @@
-import { differenceInDays, set, startOfDay } from 'date-fns'
+import { differenceInDays, set, add, startOfDay } from 'date-fns'
 
-import { calcLeftWorkhours, getDayWorkhours, IDayWorkhour, IDuration } from './DayWorkDef'
+import { calcTodayLeftWorkhours, getDailyWorkhours, IDayWorkhour, IDuration } from './DayWorkDef'
 import { IWeekendRest } from './WeekendDef'
 import calcRestDay from '@utils/CalcRestDay'
 import { durationToMinutes, minutesToDuration } from '@utils/Duration'
@@ -34,16 +34,19 @@ export function calcLeftSalaryDay(
         salaryDay.type === SalaryDayCalcFn.FixDate ? salaryDay.dateNumber : -salaryDay.dateNumber,
     })
   )
-  const nextMonthSalaryDay =
+  const nextSalaryDay =
     current < currentMonthSalaryDay
       ? currentMonthSalaryDay
       : set(currentMonthSalaryDay, { month: currentMonthSalaryDay.getMonth() + 1 })
 
-  const todayMinsLeft = Math.max(0, durationToMinutes(calcLeftWorkhours(workHour, current)))
-  const dayWorkMins = durationToMinutes(getDayWorkhours(workHour))
+  const nextSalaryDayWithWorktime =
+    salaryDay.type === SalaryDayCalcFn.FixDate ? nextSalaryDay : add(nextSalaryDay, { days: 1 })
+
+  const todayMinsLeft = Math.max(0, durationToMinutes(calcTodayLeftWorkhours(workHour, current)))
+  const dayWorkMins = durationToMinutes(getDailyWorkhours(workHour))
   const leftWorkDays =
-    differenceInDays(nextMonthSalaryDay, startOfNextDay) -
-    calcRestDay(weekendRest, startOfNextDay, nextMonthSalaryDay)
+    differenceInDays(nextSalaryDayWithWorktime, startOfNextDay) -
+    calcRestDay(weekendRest, startOfNextDay, nextSalaryDayWithWorktime)
   const diffMins = leftWorkDays * dayWorkMins + todayMinsLeft
 
   return minutesToDuration(diffMins)
