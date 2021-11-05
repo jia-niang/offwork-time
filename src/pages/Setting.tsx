@@ -61,7 +61,7 @@ const Setting: React.FC = () => {
     setCurrentWorkhour(workhour)
     setCurrentWeekendRest(weekendRest)
     setCurrentSalaryDay(salaryDay)
-  }, [workhour, config])
+  }, [workhour, config, weekendRest, salaryDay])
 
   const cancelClick = () => {
     history.push('/')
