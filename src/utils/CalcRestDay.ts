@@ -1,6 +1,6 @@
 import { isSaturday, isSunday, nextSaturday, nextSunday } from 'date-fns'
 
-import { IWeekendRest, WeekRestType } from '@def/WeekendDef'
+import { IWeekendRest, WeekRestType } from '@/def/WeekendDef'
 
 function calcRestDay(weekendRest: IWeekendRest, start: Date, end: Date): number {
   let satCount = 0

@@ -5,17 +5,17 @@ import { Switch, InputNumber, Button, Radio, Tabs } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { CheckOutlined, LeftOutlined } from '@ant-design/icons'
 
-import { TimePicker } from '@components/DateTimePicker'
+import { TimePicker } from '@/components/DateTimePicker'
 
-import { IDayWorkhour, timeToNative, nativeToTime, IDuration } from '@def/DayWorkDef'
-import { IConfig } from '@def/ConfigDef'
-import { IWeekendRest, WeekRestType } from '@def/WeekendDef'
-import { ISalaryDay, SalaryDayCalcFn } from '@def/SalaryDayDef'
+import { IDayWorkhour, timeToNative, nativeToTime, IDuration } from '@/def/DayWorkDef'
+import { IConfig } from '@/def/ConfigDef'
+import { IWeekendRest, WeekRestType } from '@/def/WeekendDef'
+import { ISalaryDay, SalaryDayCalcFn } from '@/def/SalaryDayDef'
 
-import useConfig from '@hooks/useConfig'
-import useWorkhours from '@hooks/useWorkhours'
-import useWeekendRest from '@hooks/useWeekend'
-import useSalaryDay from '@hooks/useSalaryDay'
+import useConfig from '@/hooks/useConfig'
+import useWorkhours from '@/hooks/useWorkhours'
+import useWeekendRest from '@/hooks/useWeekend'
+import useSalaryDay from '@/hooks/useSalaryDay'
 
 const backgroundImageCount: number = Number(process.env.REACT_APP_BACKGROUND_IMAGE_COUNT) || 1
 

@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useInterval } from 'ahooks'
 
-import { IDayWorkhour, calcTodayLeftWorkhours } from '@def/DayWorkDef'
-import useConfig from '@hooks/useConfig'
+import { IDayWorkhour, calcTodayLeftWorkhours } from '@/def/DayWorkDef'
+import useConfig from '@/hooks/useConfig'
 
 const Wrap = styled.div`
   padding: 15px;
@@ -34,6 +34,14 @@ const Num = styled('div')<{ hints: string }>`
     color: #525252;
     text-shadow: none;
   }
+`
+
+const Hint = styled.div`
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 `
 
 const Colon = styled.div`
@@ -68,11 +76,11 @@ const DayWorkhoursLeft: React.FC<IDayWorkhoursLeftProps> = props => {
   )
 
   if (isNaN(hour) || isNaN(minute)) {
-    return <div style={{ fontSize: 20 }}>别急！ 还没到上班时间呢 ~</div>
+    return <Hint>别急！ 还没到上班时间呢 ~</Hint>
   }
 
   if (hour <= 0 && minute <= 0) {
-    return <div style={{ fontSize: 20 }}>下班啦！ 尽情享受生活吧 ~</div>
+    return <Hint>下班啦！ 尽情享受生活吧 ~</Hint>
   }
 
   return (

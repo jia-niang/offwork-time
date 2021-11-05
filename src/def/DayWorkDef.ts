@@ -1,6 +1,6 @@
 import { set, add, differenceInMinutes } from 'date-fns'
 
-import { durationToMinutes, minutesToDuration } from '@utils/Duration'
+import { durationToMinutes, minutesToDuration } from '@/utils/Duration'
 
 export interface ITime {
   hour: number

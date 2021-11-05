@@ -7,7 +7,7 @@ export interface TimePickerProps
   extends Omit<PickerTimeProps<Date>, 'picker'> {}
 
 const TimePicker = React.forwardRef<any, TimePickerProps>((props, ref) => {
-  return <DatePicker {...props} picker="time" mode={undefined} ref={ref} />
+  return <DatePicker {...props} picker="time" ref={ref} />
 })
 
 TimePicker.displayName = 'TimePicker'

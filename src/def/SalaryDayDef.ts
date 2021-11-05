@@ -2,8 +2,8 @@ import { differenceInDays, set, add, startOfDay } from 'date-fns'
 
 import { calcTodayLeftWorkhours, getDailyWorkhours, IDayWorkhour, IDuration } from './DayWorkDef'
 import { IWeekendRest } from './WeekendDef'
-import calcRestDay from '@utils/CalcRestDay'
-import { durationToMinutes, minutesToDuration } from '@utils/Duration'
+import calcRestDay from '@/utils/CalcRestDay'
+import { durationToMinutes, minutesToDuration } from '@/utils/Duration'
 
 export enum SalaryDayCalcFn {
   FixDate = '固定日',

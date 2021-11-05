@@ -15,16 +15,7 @@ module.exports = {
       },
     }),
 
-    addWebpackAlias({
-      '@': 'src/',
-      '@def': 'src/def/',
-      '@utils': 'src/utils/',
-      '@pages': 'src/pages/',
-      '@router': 'src/router/',
-      '@assets': 'src/assets/',
-      '@components': 'src/components/',
-      '@hooks': 'src/hooks/',
-    }),
+    addWebpackAlias({ '@': 'src/' }),
 
     addBabelPlugins(['@emotion']),
 

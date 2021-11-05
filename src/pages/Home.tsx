@@ -3,17 +3,17 @@ import Helmet from 'react-helmet'
 import styled from '@emotion/styled'
 import { useHistory } from 'react-router-dom'
 
-import EditButton from '@components/EditButton'
-import InfoText from '@components/InfoText'
+import EditButton from '@/components/EditButton'
+import InfoText from '@/components/InfoText'
 
-import useConfig from '@hooks/useConfig'
-import useWorkhours from '@hooks/useWorkhours'
-import useWeekendRest from '@hooks/useWeekend'
-import useSalaryDay from '@hooks/useSalaryDay'
+import useConfig from '@/hooks/useConfig'
+import useWorkhours from '@/hooks/useWorkhours'
+import useWeekendRest from '@/hooks/useWeekend'
+import useSalaryDay from '@/hooks/useSalaryDay'
 
-import DayWorkhoursLeft from '@components/DayWorkhoursLeft'
-import WeekendLeft from '@components/WeekendLeft'
-import SalaryDayLeft from '@components/SalaryDayLeft'
+import DayWorkhoursLeft from '@/components/DayWorkhoursLeft'
+import WeekendLeft from '@/components/WeekendLeft'
+import SalaryDayLeft from '@/components/SalaryDayLeft'
 
 const Page = styled.div`
   padding: 15px;

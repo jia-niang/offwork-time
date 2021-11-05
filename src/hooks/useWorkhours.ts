@@ -1,6 +1,6 @@
 import { useLocalStorageState } from 'ahooks'
 
-import { IDayWorkhour, defaultWorkhour } from '@def/DayWorkDef'
+import { IDayWorkhour, defaultWorkhour } from '@/def/DayWorkDef'
 
 const storageKey = process.env.REACT_APP_WORKHOUR_STORAGE_KEY as string
 

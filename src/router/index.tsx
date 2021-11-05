@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import Home from '@pages/Home'
-import Setting from '@pages/Setting'
+import Home from '@/pages/Home'
+import Setting from '@/pages/Setting'
 
 const routerTable = [
   { path: '/', component: Home, exact: true },

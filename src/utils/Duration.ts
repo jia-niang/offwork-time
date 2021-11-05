@@ -1,4 +1,4 @@
-import { IDuration } from '@def/DayWorkDef'
+import { IDuration } from '@/def/DayWorkDef'
 
 export const durationToMinutes: (duration: IDuration) => number = duration =>
   duration.hour * 60 + duration.minute

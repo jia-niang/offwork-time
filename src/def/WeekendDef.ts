@@ -1,7 +1,7 @@
 import { set, differenceInDays, nextSaturday, nextSunday, startOfDay } from 'date-fns'
 
-import { calcTodayLeftWorkhours, IDayWorkhour, getDailyWorkhours, IDuration } from '@def/DayWorkDef'
-import { durationToMinutes, minutesToDuration } from '@utils/Duration'
+import { calcTodayLeftWorkhours, IDayWorkhour, getDailyWorkhours, IDuration } from '@/def/DayWorkDef'
+import { durationToMinutes, minutesToDuration } from '@/utils/Duration'
 
 export enum WeekRestType {
   Double = '双休',

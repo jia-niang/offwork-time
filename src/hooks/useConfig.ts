@@ -1,6 +1,6 @@
 import { useLocalStorageState } from 'ahooks'
 
-import { IConfig, defaultConfig } from '@def/ConfigDef'
+import { IConfig, defaultConfig } from '@/def/ConfigDef'
 
 const storageKey = process.env.REACT_APP_CONFIG_STORAGE_KEY as string
 

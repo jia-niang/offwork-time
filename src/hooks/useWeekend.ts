@@ -1,6 +1,6 @@
 import { useLocalStorageState } from 'ahooks'
 
-import { IWeekendRest, defaultWeekendRest } from '@def/WeekendDef'
+import { IWeekendRest, defaultWeekendRest } from '@/def/WeekendDef'
 
 const storageKey = process.env.REACT_APP_WEEKEND_STORAGE_KEY as string
 

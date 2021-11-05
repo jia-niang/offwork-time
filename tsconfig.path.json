@@ -1,14 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["src/*"],
-      "@def/*": ["src/def/*"],
-      "@utils/*": ["src/utils/*"],
-      "@pages/*": ["src/pages/*"],
-      "@assets/*": ["src/assets/*"],
-      "@router/*": ["src/router/*"],
-      "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@/*": [
+        "src/*"
+      ],
     }
   }
 }

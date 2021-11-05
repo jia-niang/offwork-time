@@ -1,6 +1,6 @@
 import { useLocalStorageState } from 'ahooks'
 
-import { ISalaryDay, defaultSalaryDay } from '@def/SalaryDayDef'
+import { ISalaryDay, defaultSalaryDay } from '@/def/SalaryDayDef'
 
 const storageKey = process.env.REACT_APP_SALARYDAY_STORAGE_KEY as string
 

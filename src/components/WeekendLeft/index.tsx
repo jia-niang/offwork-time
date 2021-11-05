@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { useInterval } from 'ahooks'
 
-import { calcLeftWeekend, IWeekendRest } from '@def/WeekendDef'
-import useConfig from '@hooks/useConfig'
-import { IDayWorkhour } from '@def/DayWorkDef'
+import { calcLeftWeekend, IWeekendRest } from '@/def/WeekendDef'
+import useConfig from '@/hooks/useConfig'
+import { IDayWorkhour } from '@/def/DayWorkDef'
 
 const Wrap = styled.div`
   padding: 15px;
