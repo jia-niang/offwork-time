@@ -21,6 +21,7 @@ steps:
       - name: www
         path: /var/www
     commands:
+      - mkdir -p /var/www/offwork/
       - cp -rf ./build/* /var/www/offwork/
 
 volumes:
