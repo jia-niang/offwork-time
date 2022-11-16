@@ -11,7 +11,7 @@ steps:
       - name: npmcache
         path: /usr/local/share/.cache/yarn
     commands:
-      - yarn config set registry https://registry.npm.taobao.org
+      - yarn config set registry https://registry.npmmirror.com
       - yarn
       - yarn build
     environment:
