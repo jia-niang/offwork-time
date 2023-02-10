@@ -10,7 +10,7 @@ const routerTable = [
 ]
 
 const router: React.FC = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Switch>
       {routerTable.map((route, index) => (
         <Route key={index} {...route} />
