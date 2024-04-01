@@ -250,7 +250,7 @@ const Setting: React.FC = () => {
               onChange={value => {
                 setCurrentSalaryDay({
                   ...currentSalaryDay,
-                  dateNumber: value,
+                  dateNumber: value as any,
                 })
               }}
               defaultValue={currentSalaryDay.dateNumber}
@@ -271,7 +271,7 @@ const Setting: React.FC = () => {
           <Row>
             时间更新频率：
             <InputNumber
-              onChange={value => {
+              onChange={(value: any) => {
                 setCurrentConfig({
                   ...currentConfig,
                   timer: value * 1000,

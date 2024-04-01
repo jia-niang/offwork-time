@@ -7,6 +7,7 @@ export interface TimePickerProps
   extends Omit<PickerTimeProps<Date>, 'picker'> {}
 
 const TimePicker = React.forwardRef<any, TimePickerProps>((props, ref) => {
+  // @ts-ignore
   return <DatePicker {...props} picker="time" ref={ref} />
 })
 
