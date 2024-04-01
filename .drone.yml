@@ -11,8 +11,7 @@ steps:
       - name: yarncache
         path: /home/node/.cache/yarn
     commands:
-      - yarn config set registry https://registry.npmmirror.com
-      - yarn
+      - yarn --registry=https://registry.yarnpkg.com
       - yarn build
     environment:
       CI: false
