@@ -9,7 +9,7 @@ steps:
     image: node:14
     volumes:
       - name: yarncache
-        path: /root/.cache/yarn
+        path: /home/node/.cache/yarn
     commands:
       - yarn config set registry https://registry.npmmirror.com
       - yarn
