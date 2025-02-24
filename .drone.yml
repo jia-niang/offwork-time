@@ -2,27 +2,50 @@ kind: pipeline
 name: default
 
 workspace:
-  path: /home/node/app
+  path: /offwork-time
+
+volumes:
+  - name: webroot
+    host:
+      path: /root/www
+  - name: pnpm-cache
+    host:
+      path: /root/.pnpm-cache
+
+trigger:
+  branch:
+    - master
 
 steps:
   - name: build
-    image: node:14.21.3
+    image: node:20.13.0
     volumes:
-      - name: yarncache
-        path: /home/node/.cache/yarn
+      - name: pnpm-cache
+        path: /offwork-time/.pnpm-store
     commands:
-      - yarn --registry=https://registry.yarnpkg.com
-      - yarn build
+      - npm i -g pnpm
+      - pnpm i
+      - pnpm build
     environment:
       CI: false
       GENERATE_SOURCEMAP: false
-      COS_SECRET_ID:
+
+  - name: deploy-upload-cdn
+    image: plugins/s3
+    settings:
+      endpoint: https://cos.ap-hongkong.myqcloud.com
+      region: ap-hongkong
+      bucket: paperplane-cdn-1253277322
+      access_key:
         from_secret: COS_SECRET_ID
-      COS_SECRET_KEY:
+      secret_key:
         from_secret: COS_SECRET_KEY
+      source: ./dist/**/*
+      target: /paperplane-offwork-time
+      strip_prefix: dist
 
   - name: deploy
-    image: ubuntu:22.04
+    image: alpine:3.20
     volumes:
       - name: webroot
         path: /webroot
@@ -30,15 +53,3 @@ steps:
       - mkdir -p /webroot/offwork/
       - rm -rf /webroot/offwork/*
       - cp -rf ./dist/* /webroot/offwork/
-
-volumes:
-  - name: webroot
-    host:
-      path: /root/www
-  - name: yarncache
-    host:
-      path: /root/.yarncache
-
-trigger:
-  branch:
-    - master
